@@ -45,7 +45,7 @@ const FormLayoutsIcons = ({ imgSrc }) => {
     setLoading(true)
     console.log('here')
     await axios
-      .post('http://localhost:5000/api/backoffice/editProfile', values, { withCredentials: true })
+      .post('https://api.hoozjob.com/api/backoffice/editProfile', values, { withCredentials: true })
 
       // const result = dispatch(updateProfile(values))
       .then(res => {

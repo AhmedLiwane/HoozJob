@@ -90,7 +90,7 @@ const DialogTestVerification = () => {
     }
     axios
       .post(
-        'http://localhost:5000/api/backoffice/createSession',
+        'https://api.hoozjob.com/api/backoffice/createSession',
         {
           externalUserId: ''
         },
@@ -150,7 +150,7 @@ const DialogTestVerification = () => {
 
     const fetchData = async () => {
       const headers = { 'x-company-token': localStorage.getItem('accessToken') }
-      const response = await axios.get('http://localhost:5000/api/backoffice/getAllApplications', { headers })
+      const response = await axios.get('https://api.hoozjob.com/api/backoffice/getAllApplications', { headers })
       const data = await response.data.foundApplications
       if (active && data[0]) {
         setOptions(Object.keys(data).map(key => data[key]))

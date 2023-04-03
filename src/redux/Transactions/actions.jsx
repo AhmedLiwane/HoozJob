@@ -12,7 +12,9 @@ const {
 export const getAllTransactions = () => async dispatch => {
   dispatch({ type: LOAD_TRANSACTION })
   try {
-    const result = await axios.get(`http://localhost:5000/api/backoffice/getAllTransactions`, { withCredentials: true })
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/getAllTransactions`, {
+      withCredentials: true
+    })
     dispatch({ type: GET_TRANSACTIONS, payload: result.data })
 
     return result
@@ -24,7 +26,7 @@ export const getAllTransactions = () => async dispatch => {
 export const getTransaction = id => async dispatch => {
   dispatch({ type: LOAD_TRANSACTION })
   try {
-    const result = await axios.get(`http://localhost:5000/api/backoffice/getTransaction/` + id, {
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/getTransaction/` + id, {
       withCredentials: true
     })
     dispatch({ type: GET_TRANSACTION, payload: result.data })
@@ -38,7 +40,7 @@ export const getTransaction = id => async dispatch => {
 export const removeTransaction = id => async dispatch => {
   dispatch({ type: LOAD_TRANSACTION })
   try {
-    const result = await axios.put(`http://localhost:5000/api/backoffice/archiveTransaction/` + id, '', {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/archiveTransaction/` + id, '', {
       withCredentials: true
     })
     dispatch({ type: DELETE_TRANSACTION, payload: result.data })
@@ -52,7 +54,7 @@ export const removeTransaction = id => async dispatch => {
 export const updateTransaction = (id, values) => async dispatch => {
   dispatch({ type: LOAD_TRANSACTION })
   try {
-    const result = await axios.put(`http://localhost:5000/api/backoffice/editTransaction/` + id, values, {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/editTransaction/` + id, values, {
       withCredentials: true
     })
     dispatch({ type: UPDATE_TRANSACTION, payload: result.data })

@@ -14,7 +14,7 @@ export const getUser = id => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
 
-    const result = await axios.get(`http://localhost:5000/api/backoffice/viewUser/${id}`, {
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/viewUser/${id}`, {
       withCredentials: true
     })
     dispatch({ type: GET_USER, payload: result.data })
@@ -29,7 +29,7 @@ export const getAllUsers = () => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
 
-    const result = await axios.get('http://localhost:5000/api/backoffice/getAllUsers', {
+    const result = await axios.get('https://api.hoozjob.com/api/backoffice/getAllUsers', {
       withCredentials: true
     })
     dispatch({ type: GET_ALL, payload: result.data })
@@ -44,7 +44,7 @@ export const removeUser = id => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
 
-    const result = await axios.put('http://localhost:5000/api/backoffice/archiveUser/' + id, '', {
+    const result = await axios.put('https://api.hoozjob.com/api/backoffice/archiveUser/' + id, '', {
       withCredentials: true
     })
     dispatch({ type: DELETE_USER, payload: result.data })
@@ -59,7 +59,7 @@ export const updateUser = (id, values) => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
 
-    const result = await axios.put(`http://localhost:5000/api/backoffice/editUser/${id}`, values, {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/editUser/${id}`, values, {
       withCredentials: true
     })
     dispatch({ type: UPDATE_USER, payload: result.data })
@@ -74,7 +74,7 @@ export const updateProvider = (id, values) => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
 
-    const result = await axios.put(`http://localhost:5000/api/backoffice/editProvider/${id}`, values, {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/editProvider/${id}`, values, {
       withCredentials: true
     })
     dispatch({ type: UPDATE_USER, payload: result.data })

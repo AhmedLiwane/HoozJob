@@ -8,7 +8,7 @@ import { FAIL_USER, LOAD_USER, CURRENT_USER, LOGIN_USER } from '../actionTypes'
 export const isAuth = () => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
-    const result = await axios.get('http://localhost:5000/api/backoffice/AuthAdmin', { headers })
+    const result = await axios.get('https://api.hoozjob.com/api/backoffice/AuthAdmin', { headers })
 
     if (result.data.code !== 200) {
       dispatch({ type: FAIL_USER, payload: result.data })
@@ -28,7 +28,8 @@ export const isAuth = () => async dispatch => {
 export const login = values => async dispatch => {
   try {
     dispatch({ type: LOAD_USER })
-    const result = await axios.post('http://localhost:5000/api/backoffice/login', values, { withCredentials: true })
+    const result = await axios.post('https://api.hoozjob.com/api/backoffice/login', values, { withCredentials: true })
+    console.log(result.data)
     dispatch({ type: LOGIN_USER, payload: result.data })
     return result
   } catch (error) {
@@ -40,7 +41,7 @@ export const login = values => async dispatch => {
 export const confirmEmail = email => async dispatch => {
   try {
     let result = await axios.post(
-      `http://localhost:5000/api/backoffice/confirmEmail`,
+      `https://api.hoozjob.com/api/backoffice/confirmEmail`,
       {
         recipientEmail: email
       },
@@ -64,7 +65,7 @@ export const confirmEmail = email => async dispatch => {
 export const reConfirmEmail = token => async dispatch => {
   try {
     const headers = { 'x-app-token': token }
-    let result = await axios.post(`http://localhost:5000/api/backoffice/reConfirmEmail`, '', { headers })
+    let result = await axios.post(`https://api.hoozjob.com/api/backoffice/reConfirmEmail`, '', { headers })
     if (result.data.code !== 200) {
       toast.error('Something went wrong !')
       window.location.href = '/login'
@@ -84,7 +85,7 @@ export const resendConfirmEmail = email => async dispatch => {
     }
 
     const result = await axios.post(
-      `http://localhost:5000/api/backoffice/resendConfirmEmail`,
+      `https://api.hoozjob.com/api/backoffice/resendConfirmEmail`,
       {
         recipientEmail: email
       },

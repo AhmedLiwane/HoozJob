@@ -1,9 +1,9 @@
 export default {
-  meEndpoint: 'http://localhost:5000/api/backoffice/AuthAdmin',
-  loginEndpoint: 'http://localhost:5000/api/backoffice/login',
-  resetPasswordEndpoint: 'http://localhost:5000/api/backoffice/resetpassword',
-  confirmResetPasswordEndpoint: 'http://localhost:5000/api/backoffice/confirmResetPassword',
-  registerEndpoint: 'http://localhost:5000/api/backoffice/registerComp',
-  checkOtpEndpoint: 'http://localhost:5000/api/backoffice/checkRegisterOtp',
+  meEndpoint: 'https://api.hoozjob.com/api/backoffice/AuthAdmin',
+  loginEndpoint: 'https://api.hoozjob.com/api/backoffice/login',
+  resetPasswordEndpoint: 'https://api.hoozjob.com/api/backoffice/resetpassword',
+  confirmResetPasswordEndpoint: 'https://api.hoozjob.com/api/backoffice/confirmResetPassword',
+  registerEndpoint: 'https://api.hoozjob.com/api/backoffice/registerComp',
+  checkOtpEndpoint: 'https://api.hoozjob.com/api/backoffice/checkRegisterOtp',
   storageTokenKeyName: 'accessToken'
 }

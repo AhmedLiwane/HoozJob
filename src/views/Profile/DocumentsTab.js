@@ -25,7 +25,7 @@ const DocumentsTab = ({ data }) => {
     const headers = { 'x-company-token': localStorage.getItem('accessToken') }
     setReload(true)
     axios
-      .get(`http://localhost:5000/api/backoffice/decryptFrontImage/${data.id}`, { headers })
+      .get(`https://api.hoozjob.com/api/backoffice/decryptFrontImage/${data.id}`, { headers })
       .then(res => {
         setFront('data:image/jpeg;base64,' + res.data?.data)
         setReload(false)
@@ -39,7 +39,7 @@ const DocumentsTab = ({ data }) => {
     const headers = { 'x-company-token': localStorage.getItem('accessToken') }
     setReload(true)
     axios
-      .get(`http://localhost:5000/api/backoffice/decryptBackImage/${data.id}`, { headers })
+      .get(`https://api.hoozjob.com/api/backoffice/decryptBackImage/${data.id}`, { headers })
       .then(res => {
         setBack('data:image/jpeg;base64,' + res.data?.data)
         setReload(false)

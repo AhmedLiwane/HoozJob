@@ -13,7 +13,7 @@ import {
 export const viewProfile = () => async dispatch => {
   dispatch({ type: LOAD_USER })
   try {
-    const result = await axios.get(`http://localhost:5000/api/backoffice/viewProfile`, { withCredentials: true })
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/viewProfile`, { withCredentials: true })
     dispatch({ type: GET_ADMIN, payload: result.data })
 
     return result
@@ -24,7 +24,7 @@ export const viewProfile = () => async dispatch => {
 
 export const updateProfile = values => async dispatch => {
   try {
-    const result = await axios.post(`http://localhost:5000/api/backoffice/updateProfile`, values, {
+    const result = await axios.post(`https://api.hoozjob.com/api/backoffice/updateProfile`, values, {
       withCredentials: true
     })
     dispatch({ type: UPDATE_MEMBER, payload: result.data })
@@ -40,7 +40,7 @@ export const updateProfile = values => async dispatch => {
 
 export const updateAdmin = (id, values) => async dispatch => {
   try {
-    const result = await axios.put(`http://localhost:5000/api/backoffice/editAdmin/` + id, values, {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/editAdmin/` + id, values, {
       withCredentials: true
     })
     dispatch({ type: UPDATE_MEMBER, payload: result.data })
@@ -56,7 +56,7 @@ export const updateAdmin = (id, values) => async dispatch => {
 export const updateProRequest = (id, proResult) => async dispatch => {
   try {
     const result = await axios.put(
-      `http://localhost:5000/api/backoffice/updateProRequest/` + id,
+      `https://api.hoozjob.com/api/backoffice/updateProRequest/` + id,
       { result: proResult },
       {
         withCredentials: true
@@ -75,7 +75,7 @@ export const updateProRequest = (id, proResult) => async dispatch => {
 
 export const changePassword = values => async dispatch => {
   try {
-    const result = await axios.post(`http://localhost:5000/api/backoffice/changePassword`, values, {
+    const result = await axios.post(`https://api.hoozjob.com/api/backoffice/changePassword`, values, {
       withCredentials: true
     })
     dispatch({ type: CHANGE_PASSWORD, payload: result.data })
@@ -90,7 +90,7 @@ export const changePassword = values => async dispatch => {
 
 export const getAllAdmins = () => async dispatch => {
   try {
-    const result = await axios.get(`http://localhost:5000/api/backoffice/getAllAdmins`, {
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/getAllAdmins`, {
       withCredentials: true
     })
     dispatch({ type: GET_ADMINS, payload: result.data })
@@ -103,7 +103,7 @@ export const getAllAdmins = () => async dispatch => {
 
 export const removeAdmin = id => async dispatch => {
   try {
-    const result = await axios.put(`http://localhost:5000/api/backoffice/archiveAdmin/` + id, '', {
+    const result = await axios.put(`https://api.hoozjob.com/api/backoffice/archiveAdmin/` + id, '', {
       withCredentials: true
     })
     dispatch({ type: DELETE_ADMIN, payload: result.data })
@@ -116,7 +116,7 @@ export const removeAdmin = id => async dispatch => {
 
 export const addAdmin = values => async dispatch => {
   try {
-    const result = await axios.post(`http://localhost:5000/api/backoffice/createAdmin`, values, {
+    const result = await axios.post(`https://api.hoozjob.com/api/backoffice/createAdmin`, values, {
       withCredentials: true
     })
     dispatch({ type: DELETE_ADMIN, payload: result.data })
@@ -130,7 +130,7 @@ export const addAdmin = values => async dispatch => {
 export const getAdmin = id => async dispatch => {
   dispatch({ type: LOAD_USER })
   try {
-    const result = await axios.get(`http://localhost:5000/api/backoffice/viewAdmin/` + id, { withCredentials: true })
+    const result = await axios.get(`https://api.hoozjob.com/api/backoffice/viewAdmin/` + id, { withCredentials: true })
     dispatch({ type: GET_ADMIN, payload: result.data })
 
     return result

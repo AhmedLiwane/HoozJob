@@ -78,7 +78,7 @@ const CategoryPage = ({ imgSrc }) => {
 
   const fetchData = async () => {
     setLoading(true)
-    await axios.get('http://localhost:5000/api/backoffice/getCategory/' + id, { withCredentials: true }).then(res => {
+    await axios.get('https://api.hoozjob.com/api/backoffice/getCategory/' + id, { withCredentials: true }).then(res => {
       if (res.data.code === 200) {
         setValues({
           categoryName: res?.data?.data?.categoryName,

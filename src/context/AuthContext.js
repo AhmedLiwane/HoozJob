@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
 
       if (storedToken) {
         await axios
-          .get('http://localhost:5000/api/backoffice/auth', {
+          .get('https://api.hoozjob.com/api/backoffice/auth', {
             withCredentials: true
           })
           .then(async response => {
