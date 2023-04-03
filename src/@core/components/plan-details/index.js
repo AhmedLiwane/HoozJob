@@ -13,7 +13,6 @@ import { useRouter } from 'next/router'
 
 // ** Custom Components Imports
 import CustomChip from 'src/@core/components/mui/chip'
-import { buyPack } from 'src/redux/Company/action'
 import { useDispatch } from 'react-redux'
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
@@ -53,21 +52,6 @@ const PlanDetails = props => {
 
   const callBack = prop => {
     setIncomplete(prop)
-  }
-
-  const purchasePack = async pack => {
-    if (CompanyState?.company?.CompanyRegistrationNumber == '' || MemberState?.admin?.PhoneNumber == '') {
-      setIncomplete(true)
-    } else {
-      setLoadingButton(true)
-      dispatch(buyPack(pack))
-        .then(res => {
-          route.replace(`/invoice/${res.data.newInvoice.id}`)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
   }
 
   const renderFeatures = () => {
@@ -140,7 +124,7 @@ const PlanDetails = props => {
       <BoxFeature>{renderFeatures()}</BoxFeature>
       <LoadingButton
         loading={LoadingBtn}
-        onClick={() => purchasePack(data)}
+        onClick={''}
         fullWidth
         color={data?.currentPlan ? 'success' : 'primary'}
         variant={data?.popularPlan ? 'contained' : 'outlined'}

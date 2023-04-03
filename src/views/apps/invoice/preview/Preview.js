@@ -16,7 +16,6 @@ import SendInvoiceDrawer from 'src/views/apps/invoice/shared-drawer/SendInvoiceD
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { Backdrop, CircularProgress } from '@mui/material'
-import { getInvoice } from 'src/redux/Company/action'
 import { useDispatch } from 'react-redux'
 
 const InvoicePreview = () => {
@@ -34,11 +33,6 @@ const InvoicePreview = () => {
 
   const toggleSendInvoiceDrawer = () => setSendInvoiceOpen(!sendInvoiceOpen)
   const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
-
-  useEffect(() => {
-    dispatch(getInvoice(id))
-    //eslint-disable-next-line
-  }, [])
 
   if (!CompanyState.load && !CompanyState.error) {
     return (

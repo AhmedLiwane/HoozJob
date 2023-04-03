@@ -9,7 +9,6 @@ import CardContent from '@mui/material/CardContent'
 // ** Icons Imports
 import SendOutline from 'mdi-material-ui/SendOutline'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import { InitPayment } from 'src/redux/Company/action'
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -17,18 +16,6 @@ import { useDispatch } from 'react-redux'
 const PreviewActions = ({ id, isPaid, toggleSendInvoiceDrawer, toggleAddPaymentDrawer }) => {
   const dispatch = useDispatch()
   const [buttonLoad, setLoad] = useState(false)
-
-  const redirectToPayment = () => {
-    setLoad(true)
-    dispatch(InitPayment(id))
-      .then(res => {
-        setLoad(false)
-        window.open(res.data.url, '_blank').focus()
-      })
-      .catch(err => {
-        setLoad(false), console.log(err)
-      })
-  }
 
   return (
     <>
@@ -42,7 +29,7 @@ const PreviewActions = ({ id, isPaid, toggleSendInvoiceDrawer, toggleAddPaymentD
               color='success'
               variant='contained'
               startIcon={<CurrencyUsd />}
-              onClick={redirectToPayment}
+              onClick={''}
             >
               Pay with card
             </LoadingButton>

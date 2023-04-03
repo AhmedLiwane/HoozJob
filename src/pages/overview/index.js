@@ -17,14 +17,8 @@ import BillingHeader from 'src/views/overview/BillingHeader'
 // ** Redux
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { getBilling } from 'src/redux/Company/action'
 
 const Overview = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getBilling())
-  }, [])
-
   const CompanyState = useSelector(state => state.CompanyReducer)
 
   // ** Hooks

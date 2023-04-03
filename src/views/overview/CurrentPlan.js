@@ -30,7 +30,6 @@ import CustomChip from 'src/@core/components/mui/chip'
 import 'react-credit-cards/es/styles-compiled.css'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-import { buyPack, getPacks } from 'src/redux/Company/action'
 import { useRouter } from 'next/router'
 import { Card } from '@mui/material'
 
@@ -96,20 +95,6 @@ const Currentplan = ({ CompanyState }) => {
 
   const plan = e => {
     setSelectPlan(e.target.value)
-  }
-  useEffect(() => {
-    dispatch(getPacks())
-  }, [])
-
-  const purchasePack = async pack => {
-    setLoadingButton(true)
-    dispatch(buyPack(pack[0]))
-      .then(res => {
-        route.replace(`/invoice/${res.data.newInvoice.id}`)
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 
   const handlePage = url => {
@@ -265,28 +250,7 @@ const Currentplan = ({ CompanyState }) => {
               })}
             </Select>
           </FormControl>
-          <LoadingButton
-            loading={loadingButton}
-            variant='contained'
-            sx={{ minWidth: ['100%', 0] }}
-            onClick={() => {
-              selectPlan.includes('PE')
-                ? purchasePack(
-                    CompanyState?.packs?.annually?.filter(p => {
-                      if (p.title === selectPlan) {
-                        return p
-                      }
-                    })
-                  )
-                : purchasePack(
-                    CompanyState?.packs?.monthly?.filter(p => {
-                      if (p.title === selectPlan) {
-                        return p
-                      }
-                    })
-                  )
-            }}
-          >
+          <LoadingButton loading={loadingButton} variant='contained' sx={{ minWidth: ['100%', 0] }} onClick={''}>
             Upgrade
           </LoadingButton>
         </DialogContent>

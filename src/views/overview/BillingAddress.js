@@ -23,7 +23,6 @@ import DialogContentText from '@mui/material/DialogContentText'
 
 // ** Hooks
 import { useDispatch } from 'react-redux'
-import { updateCompany } from 'src/redux/Company/action'
 
 // ** Styled Components
 import toast from 'react-hot-toast'
@@ -42,24 +41,6 @@ const BillingAddress = ({ CompanyState }) => {
     setUpdates({ ...updates, [e.target.id]: e.target.value })
   }
 
-  const saveChanges = async updates => {
-    setTimeout(() => {
-      setOpenAddressCard(false)
-    }, '5000')
-    setLoadingBtn(true)
-    dispatch(updateCompany(updates)).then(res => {
-      setLoadingBtn(false)
-      if (res.data.code !== 200) {
-        toast.error(CompanyState.msg, {
-          position: 'bottom-right'
-        })
-      } else {
-        toast.success(CompanyState.msg, {
-          position: 'bottom-right'
-        })
-      }
-    })
-  }
   return (
     <Card>
       <CardHeader
@@ -352,7 +333,7 @@ const BillingAddress = ({ CompanyState }) => {
           </form>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center' }}>
-          <LoadingButton variant='contained' loading={loadingBtn} sx={{ mr: 1 }} onClick={() => saveChanges(updates)}>
+          <LoadingButton variant='contained' loading={loadingBtn} sx={{ mr: 1 }} onClick={''}>
             Submit
           </LoadingButton>
           <Button
