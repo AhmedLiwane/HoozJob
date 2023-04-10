@@ -5,7 +5,8 @@ const {
   LOAD_CATEGORY,
   ADD_CATEGORY,
   DELETE_CATEGORY,
-  UPDATE_CATEGORY
+  UPDATE_CATEGORY,
+  GET_CATEGORY
 } = require('../actionTypes')
 
 // initialstate
@@ -28,6 +29,12 @@ const CategoryReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         categories: payload.data,
+        load: false
+      }
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: payload.data,
         load: false
       }
     case DELETE_CATEGORY:

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 // ** Icons Imports
 import { useSelector } from 'react-redux'
 import FormProfileLayout from 'src/views/forms/form-layouts/FormProfileLayout'
+import axios from 'axios'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -44,12 +45,28 @@ const MyProfile = () => {
   // ** State
   const [imgSrc, setImgSrc] = useState(adminState?.admin.Selfie || '/images/avatars/1.png')
 
+  const uploadImage = async img => {
+    var base64result = img.split(',')[1]
+    let body = new FormData()
+    body.set('key', '2be4b28341572978b5f9345a3adc90ba')
+    body.append('image', base64result)
+
+    await axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: body
+    }).then(res => {
+      setImgSrc(res.data.data.url)
+    })
+  }
+
   const onChange = file => {
     const reader = new FileReader()
     const { files } = file.target
     if (files && files.length !== 0) {
-      reader.onload = () => {
+      reader.onload = async () => {
         setImgSrc(reader.result)
+        uploadImage(reader.result)
       }
       reader.readAsDataURL(files[0])
     }

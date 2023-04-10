@@ -34,7 +34,7 @@ import { Delete, EyeRemoveOutline } from 'mdi-material-ui'
 
 // ** Vars
 const userStatusObj = {
-  Pro: 'success',
+  Accepted: 'success',
   Normal: 'secondary',
   Pending: 'warning',
   Declined: 'error'

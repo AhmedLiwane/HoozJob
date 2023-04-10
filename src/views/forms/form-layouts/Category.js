@@ -33,6 +33,8 @@ import { forwardRef } from 'react'
 import Box from '@mui/material/Box'
 import { getCategory, updateCategory } from 'src/redux/Categories/actions'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import axios from 'axios'
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -50,8 +52,33 @@ const MenuProps = {
   }
 }
 
+const ImgStyled = styled('img')(({ theme }) => ({
+  width: 120,
+  height: 120,
+  marginRight: theme.spacing(5),
+  borderRadius: theme.shape.borderRadius
+}))
+
+const ButtonStyled = styled(Button)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    textAlign: 'center'
+  }
+}))
+
+const ResetButtonStyled = styled(Button)(({ theme }) => ({
+  marginLeft: theme.spacing(4),
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    marginLeft: 0,
+    textAlign: 'center',
+    marginTop: theme.spacing(4)
+  }
+}))
+
 const CategoryPage = ({ imgSrc }) => {
   // ** Hooks
+  const state = useSelector(state => state.CategoryReducer)
   const dispatch = useDispatch()
   const router = useRouter()
   const { id } = router.query
@@ -59,14 +86,14 @@ const CategoryPage = ({ imgSrc }) => {
   // ** States
   const [loading, setLoading] = useState(false)
   const [loadingbtn, setLoadingbtn] = useState(false)
-  const [category, setCategory] = useState({})
 
   const [values, setValues] = useState({
-    categoryName: '',
-    description: '',
+    categoryName: state?.category.categoryName,
+    description: state?.category.description,
     image: imgSrc,
-    subCategories: []
+    subCategories: state?.category.subCategories
   })
+  const [subCatImage, setSubCatImage] = useState('/images/avatars/1.png')
 
   const [subCat, setSubCat] = useState({
     subCatName: '',
@@ -76,38 +103,15 @@ const CategoryPage = ({ imgSrc }) => {
   const [subCats, setSubCats] = useState([])
   const [show, setShow] = useState(false)
 
-  const fetchData = async () => {
-    setLoading(true)
-    await axios.get('https://api.hoozjob.com/api/backoffice/getCategory/' + id, { withCredentials: true }).then(res => {
-      if (res.data.code === 200) {
-        setValues({
-          categoryName: res?.data?.data?.categoryName,
-          description: res?.data?.data?.description,
-          image: res?.data?.data?.image,
-          subCategories: res?.data?.data?.subCategories
-        })
-        setCategory(res?.data?.data)
-        setSubCats(res?.data?.data?.subCategories)
-        setLoading(false)
-      }
-    })
-  }
-  useEffect(() => {
-    fetchData()
-  }, [])
-
   const saveChanges = async () => {
     setLoadingbtn(true)
 
     const result = dispatch(updateCategory(id, values)).then(res => {
       if (res.data.code === 200) {
         dispatch(getCategory(id)).then(res => {
-          if (res.data.code === 200) {
-            setCategory(res.data.data)
-          }
+          setLoadingbtn(false)
         })
       }
-      setLoadingbtn(false)
     })
     await toast.promise(result, {
       loading: 'Loading...',
@@ -123,6 +127,9 @@ const CategoryPage = ({ imgSrc }) => {
   const onChangeInfo = async e => {
     setValues({ ...values, [e.target.id]: e.target.value })
   }
+  useEffect(() => {
+    setValues({ ...values, image: imgSrc })
+  }, [imgSrc])
 
   useEffect(() => {
     setValues({ ...values, image: imgSrc })
@@ -131,6 +138,37 @@ const CategoryPage = ({ imgSrc }) => {
   useEffect(() => {
     setValues({ ...values, subCategories: subCats })
   }, [subCats])
+
+  useEffect(() => {
+    setSubCats(state?.category?.subCategories)
+  }, [state])
+
+  const uploadImage = async img => {
+    var base64result = img.split(',')[1]
+    let body = new FormData()
+    body.set('key', '2be4b28341572978b5f9345a3adc90ba')
+    body.append('image', base64result)
+
+    await axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: body
+    }).then(res => {
+      setSubCat({ ...subCat, image: res.data.data.url })
+    })
+  }
+
+  const onChangeSubCatImage = async file => {
+    const reader = new FileReader()
+    const { files } = file.target
+    if (files && files.length !== 0) {
+      reader.onload = async () => {
+        setSubCatImage(reader.result)
+        uploadImage(reader.result)
+      }
+      reader.readAsDataURL(files[0])
+    }
+  }
 
   return (
     <Card>
@@ -144,7 +182,7 @@ const CategoryPage = ({ imgSrc }) => {
                 id='categoryName'
                 label='Category'
                 onChange={onChangeInfo}
-                defaultValue={category?.categoryName}
+                defaultValue={state?.category?.categoryName}
                 placeholder={'Category name'}
                 InputProps={{
                   startAdornment: (
@@ -160,7 +198,7 @@ const CategoryPage = ({ imgSrc }) => {
                 fullWidth
                 type='text'
                 id='description'
-                defaultValue={category?.description}
+                defaultValue={state?.category?.description}
                 label='Description'
                 onChange={onChangeInfo}
                 placeholder={'This is an example...'}
@@ -245,6 +283,29 @@ const CategoryPage = ({ imgSrc }) => {
               Add a sub category
             </Typography>
             <Typography variant='body2'>You can add as many sub categories as preferred.</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 5 }}>
+            <ImgStyled src={subCatImage} alt='Sub Cat Pic' sx={{ objectFit: 'cover' }} />
+
+            <Box>
+              <ButtonStyled component='label' variant='contained' htmlFor='subCatImage'>
+                Upload New Photo
+                <input
+                  hidden
+                  type='file'
+                  onChange={onChangeSubCatImage}
+                  accept='image/png, image/jpeg'
+                  id='subCatImage'
+                />
+              </ButtonStyled>
+              <ResetButtonStyled
+                color='error'
+                variant='outlined'
+                onClick={() => setSubCatImage('/images/avatars/1.png')}
+              >
+                reset
+              </ResetButtonStyled>
+            </Box>
           </Box>
           <Grid container spacing={6}>
             <Grid item sm={6} xs={12}>

@@ -10,6 +10,7 @@ import AddCategoryLayout from 'src/views/forms/form-layouts/AddCategoryLayout'
 import styled from '@emotion/styled'
 import Button from '@mui/material/Button'
 import { Box } from '@mui/system'
+import axios from 'axios'
 
 const ButtonStyled = styled(Button)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
@@ -28,12 +29,28 @@ const ImgStyled = styled('img')(({ theme }) => ({
 const AddCategory = () => {
   const [imgSrc, setImgSrc] = useState('/images/banners/banner-21.jpg')
 
+  const uploadImage = async img => {
+    var base64result = img.split(',')[1]
+    let body = new FormData()
+    body.set('key', '2be4b28341572978b5f9345a3adc90ba')
+    body.append('image', base64result)
+
+    await axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: body
+    }).then(res => {
+      setImgSrc(res.data.data.url)
+    })
+  }
+
   const onChange = file => {
     const reader = new FileReader()
     const { files } = file.target
     if (files && files.length !== 0) {
-      reader.onload = () => {
+      reader.onload = async () => {
         setImgSrc(reader.result)
+        uploadImage(reader.result)
       }
       reader.readAsDataURL(files[0])
     }

@@ -21,6 +21,10 @@ import Category from 'src/views/pages/category/Category'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useSelector } from 'react-redux'
 import { CircularProgress } from '@mui/material'
+import { useEffect } from 'react'
+import { getCategory } from 'src/redux/Categories/actions'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 
 const Tab = styled(MuiTab)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -40,19 +44,31 @@ const TabName = styled('span')(({ theme }) => ({
 }))
 
 const AddCategory = () => {
+  // ** Hooks
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const { id } = router.query
+
   // ** State
-  const load = useSelector(state => state.CategoryReducer.load)
   const [value, setValue] = useState('cat')
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
+  useEffect(() => {
+    setLoading(true)
+    dispatch(getCategory(id)).then(res => {
+      setLoading(false)
+    })
+  }, [])
+
   return (
     <>
-      {load ? (
+      {loading ? (
         <Backdrop
-          open={load}
+          open={loading}
           sx={{
             position: 'absolute',
             color: theme => theme.palette.common.white,
